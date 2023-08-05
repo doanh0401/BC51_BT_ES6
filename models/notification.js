@@ -49,10 +49,12 @@ export function checkValidation(isAdd) {
     const typeJob = domId("typeJob").value;
 
     let isValue = true;
-    isValue &= validation.checkEmpty(id, "errorId", "(*) Vui lòng nhập mã người dùng");
-    isValue &= validation.checkEmpty(name, "errorName", "(*) Vui lòng nhập tên người dùng");
+    isValue &= validation.checkEmpty(id, "errorId", "(*) Vui lòng nhập mã người dùng") && validation.kiemTraDoDaiKiTu(id,"errorId","(*) Vui lòng nhập mã 4 - 6 ký tự",4,6);
+    isValue &= validation.checkEmpty(name, "errorName", "(*) Vui lòng nhập tên người dùng") && validation.checkPattern(name,"errorName","(*) Vui lòng chỉ nhập chữ cái","^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +
+    "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +
+    "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$");
     isValue &= validation.checkEmpty(address, "errorAddress", "(*) Vui lòng nhập địa chỉ");
-    isValue &= validation.checkEmpty(email, "errorEmail", "(*) Vui lòng nhập địa chỉ email");
+    isValue &= validation.checkEmpty(email, "errorEmail", "(*) Vui lòng nhập địa chỉ email")&& validation.checkPattern(email,"errorEmail","Vui lòng nhập email không hợp lệ",/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
     isValue &= validation.checkEmptyOption("typeJob", "errorTypeJob", "(*) Vui lòng chọn nghề nghiệp");
 
     if(typeJob !== 0){
@@ -62,9 +64,9 @@ export function checkValidation(isAdd) {
         const ly = domId("diemLy").value;
         const hoa = domId("diemHoa").value;
 
-        isValue &= validation.checkEmpty(toan, "errorDiemToan", "(*) Vui lòng nhập điểm toán") && validation.CheckNumber(toan, "errorDiemToan", "(*) Vui lòng nhập số");
-        isValue &= validation.checkEmpty(ly, "errorDiemLy", "(*) Vui lòng nhập tên người dùng") && validation.CheckNumber(ly, "errorDiemLy", "(*) Vui lòng nhập số");
-        isValue &= validation.checkEmpty(hoa, "erroDiemHoa", "(*) Vui lòng nhập tên người dùng") && validation.CheckNumber(hoa, "errorDiemHoa", "(*) Vui lòng nhập số");
+        isValue &= validation.checkEmpty(toan, "errorDiemToan", "(*) Vui lòng nhập điểm toán") && validation.CheckNumber(toan, "errorDiemToan", "(*) Vui lòng nhập số") && validation.kiemTraGiaTri(toan,"errorDiemToan","(*) Vui lòng nhập điểm hợp lệ",0,10);
+        isValue &= validation.checkEmpty(ly, "errorDiemLy", "(*) Vui lòng nhập điểm lý") && validation.CheckNumber(ly, "errorDiemLy", "(*) Vui lòng nhập số") && validation.kiemTraGiaTri(ly,"errorDiemLy","(*) Vui lòng nhập điểm hợp lệ",0,10);
+        isValue &= validation.checkEmpty(hoa, "errorDiemHoa", "(*) Vui lòng nhập điểm hóa") && validation.CheckNumber(hoa, "errorDiemHoa", "(*) Vui lòng nhập số") && validation.kiemTraGiaTri(hoa,"errorDiemHoa","(*) Vui lòng nhập điểm hợp lệ",0,10);
 
         } else if(typeJob === "Employee") {
 
@@ -79,7 +81,9 @@ export function checkValidation(isAdd) {
         const invoicevalue = domId("invoicevalue").value;
         const evaluate = domId("evaluate").value;
 
-        isValue &= validation.checkEmpty(companyname, "errorCompanyName", "(*) Vui lòng nhập tên công ty");
+        isValue &= validation.checkEmpty(companyname, "errorCompanyName", "(*) Vui lòng nhập tên công ty") && validation.checkPattern(companyname,"errorCompanyName","(*) Vui lòng chỉ nhập chữ cái","^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" +
+        "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" +
+        "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$");
         isValue &= validation.checkEmpty(invoicevalue, "errorInvoiceValue", "(*) Vui lòng nhập trị giá hóa đơn") && validation.CheckNumber(invoicevalue, "errorInvoiceValue", "(*) Vui lòng nhập số");
         isValue &= validation.checkEmpty(evaluate, "errorEvaluate", "(*) Vui lòng nhập đánh giá");
 

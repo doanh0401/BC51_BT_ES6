@@ -101,7 +101,7 @@ window.AddPerson = () => {
 
     if(checkValidation(true)) {
 
-        isValue = validation.checkId(id,"errorId","(*) Mã người dùng đã tồn tại",listPerson);
+        const isValue = validation.checkId(person.id,"errorId","(*) Mã người dùng đã tồn tại",listPerson.arr);
 
         if(isValue) {
 
@@ -177,7 +177,7 @@ function renderTable(data = listPerson.arr) {
 window.OpenEdit = (id) => {
     domId("id").disabled=true;
     document.querySelector(".modal-title").innerHTML = "Edit Person";
-    document.querySelector(".modal-footer").innerHTML = `<button data-dismiss="modal" onclick="EditPerson()" class="btn btn-success">Edit</button>`;
+    document.querySelector(".modal-footer").innerHTML = `<button onclick="EditPerson()" class="btn btn-success">Edit</button>`;
     const person = listPerson.findById(id);
     const {name,address,email,typeJob} = person;
     domId("name").value = name;

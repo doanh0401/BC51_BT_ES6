@@ -28,10 +28,11 @@ export class Validation {
             showError(errorId, mess);
             return false;
         };
-        checkId = (value, errorId, mess, listPerson) => {
+        checkId = (value, errorId, mess, array) => {
             let existId = false;
-            for( const element of listPerson) {
-                if(value === element.id) {
+            for( const person of array) {
+                console.log(person.id,value);
+                if(value === person.id) {
                     existId = true;
                     break;
                 }
@@ -43,4 +44,33 @@ export class Validation {
             hiddenError(errorId);
             return true;
         }
+        kiemTraDoDaiKiTu = (value, errorId, mess, min, max) => {
+            if (min <= value.trim().length && value.trim().length <= max) {
+              hiddenError(errorId);
+              return true;
+            }
+            showError(errorId,mess);
+            return false;
+        };
+        checkPattern = (value, errorId, mess, letter) => {
+            if (value.match(letter)) {
+                hiddenError(errorId);
+                return true;
+            }
+            showError(errorId,mess);
+            return false;
+          };
+        kiemTraGiaTri = (value, errorId, mess, min, max) => {
+            let temp = parseFloat(value);
+            if (min <= temp && temp <= max) {
+
+              hiddenError(errorId)
+        
+              return true;
+            }
+            
+            showError(errorId,mess)
+        
+            return false;
+          };
 }
