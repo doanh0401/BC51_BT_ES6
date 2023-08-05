@@ -1,15 +1,21 @@
 import { Employee } from "../models/Employee.js";
 import { ListPerson } from "../models/ListPerson.js";
 import { Student } from "../models/Student.js";
+import { Validation } from "../models/Validation.js";
 import { Customer } from "../models/customer.js";
+import { clearError } from "../models/notification.js";
+import { checkValidation } from "../models/notification.js";
 
 const domId = (id) => document.getElementById(id);
 const listPerson = new ListPerson();
+const validation = new Validation();
 // hàm thêm button addProduct
 domId("btnThemSP").onclick = () => {
         document.querySelector(".modal-title").innerHTML = "Add Person";
         document.querySelector(".modal-footer").innerHTML = `<button onclick="AddPerson()" class="btn btn-success">Add</button>`
         domId("myForm").reset();
+        clearError("errorName", "errorAddress", "errorEmail", "errorId", "errorDiemToan", "errorDiemLy", "errorDiemHoa", "errorLuongNgay","errorWorkingDay","errorCompanyName","errorInvoiceValue","errorEvaluate");
+        domId("id").disabled = false; 
 
         domId("blockToan").style.display="none";
         domId("blockLy").style.display="none";
@@ -92,34 +98,50 @@ window.HiddenInput = () => {
 //Thêm 
 window.AddPerson = () => {
     const person = LayThongTin();
-    
-    const entity = createEntity(person);
 
-    listPerson.Add(entity);
-    
-    saveData();
+    if(checkValidation(true)) {
+
+        isValue = validation.checkId(id,"errorId","(*) Mã người dùng đã tồn tại",listPerson);
+
+        if(isValue) {
+
+            const entity = createEntity(person);
+
+            listPerson.Add(entity);
+            
+            saveData();
+
+        }
+    }
 }
 
 function createEntity(person) {
     let entity;
     if(person.typeJob === "Student") {
+
         const {name,address,id,email,typeJob,toan,ly,hoa} = person;
         const student = new Student(name,address,id,email,typeJob,toan,ly,hoa);
         student.TinhTrb();
         return entity = student;
+
     }
     else if(person.typeJob === "Employee") {
+
         const {name,address,id,email,typeJob,ngaylamviec,luongngay} = person;
         const employee = new Employee(name,address,id,email,typeJob,ngaylamviec,luongngay);
         employee.TinhLuong();
         return entity = employee;
+
     } else {
+
         const {name,address,id,email,companyname,typeJob,invoicevalue,evaluate} = person;
         const customer = new Customer(name,address,id,email,typeJob,companyname,invoicevalue,evaluate);
         return entity = customer;
+
     }
 }
 function renderTable(data = listPerson.arr) {
+    
   var content = "";
   for (var i = 0; i < data.length; i++) {
     var person = data[i];
@@ -153,6 +175,7 @@ function renderTable(data = listPerson.arr) {
 }
 
 window.OpenEdit = (id) => {
+    domId("id").disabled=true;
     document.querySelector(".modal-title").innerHTML = "Edit Person";
     document.querySelector(".modal-footer").innerHTML = `<button data-dismiss="modal" onclick="EditPerson()" class="btn btn-success">Edit</button>`;
     const person = listPerson.findById(id);
@@ -187,11 +210,15 @@ window.EditPerson = () => {
     
     const person = LayThongTin();
     
-    const entity = createEntity(person);
-    
-    listPerson.update(entity);
+    if(checkValidation(false)) {
 
-    saveData();
+        const entity = createEntity(person);
+    
+        listPerson.update(entity);
+
+        saveData();
+        
+    }
 
 }
 

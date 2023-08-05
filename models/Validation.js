@@ -1,3 +1,6 @@
+import {showError} from "./notification.js"
+import {hiddenError} from "./notification.js"
+
 export class Validation {
         checkEmpty = (value, errorId, mess) => {
             if (value === "") {
