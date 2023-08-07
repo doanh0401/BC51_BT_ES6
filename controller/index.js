@@ -9,6 +9,12 @@ import { checkValidation } from "../models/notification.js";
 const domId = (id) => document.getElementById(id);
 const listPerson = new ListPerson();
 const validation = new Validation();
+
+$(function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar, #content').toggleClass('active');
+    });
+  });
 // hàm thêm button addProduct
 domId("btnThemSP").onclick = () => {
         document.querySelector(".modal-title").innerHTML = "Add Person";
