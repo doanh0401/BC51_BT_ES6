@@ -31,7 +31,6 @@ export class Validation {
         checkId = (value, errorId, mess, array) => {
             let existId = false;
             for( const person of array) {
-                console.log(person.id,value);
                 if(value === person.id) {
                     existId = true;
                     break;
