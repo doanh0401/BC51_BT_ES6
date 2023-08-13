@@ -357,3 +357,12 @@ function SortedName() {
 
   return SortedArr;
 }
+
+domId("searchtxt").addEventListener("keyup", search);
+
+function search() {
+  const txtSearch = domId("searchtxt").value;
+  const mangTimKiem = listPerson.timKiem(txtSearch);
+  renderTable(mangTimKiem);
+  if (txtSearch == 0) renderTable(listPerson.arr);
+}
